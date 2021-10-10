@@ -7,12 +7,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all (this was the code originally)
-    #@all_ratings = Movie.all_ratings
-      #I don't know where to put this ^
-    #@ratings_to_show = params[:ratings].keys 
-      #params[:ratings] should be a hash so .keys gives just the keys
-    #@movies = Movie.with_ratings(@ratings_to_show)
+    @all_ratings = Movie.all_ratings
+    entered_ratings = params[:ratings]
+    if entered_ratings.nil?
+      @ratings_to_show = []
+    else
+      @ratings_to_show = entered_ratings.keys 
+    end
+    @movies = Movie.with_ratings(@ratings_to_show)
   end
 
   def new
