@@ -12,7 +12,7 @@ class Movie < ActiveRecord::Base
   end
   
   def self.all_ratings
-    return ['G', 'PG', 'PG-13', 'R']
+    return ['G', 'PG', 'PG-13', 'R', 'NC-17']
   end
     
 end
