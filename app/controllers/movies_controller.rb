@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     else
       @ratings_to_show = entered_ratings.keys 
     end
-    
+    @ratings_to_show_hash = Hash[@ratings_to_show.collect {|r| [r, 1]}]
     sort_param = params[:sort_param]
     if sort_param.nil?
       @movies = Movie.with_ratings(@ratings_to_show)
