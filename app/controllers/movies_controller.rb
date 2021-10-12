@@ -11,33 +11,31 @@ class MoviesController < ApplicationController
     entered_ratings = params[:ratings]
     if entered_ratings.nil?
       #if session.key?(:ratings)
-        #@ratings_to_show = session[:ratings]
+       # @ratings_to_show = session[:ratings].keys
       #else
         #@ratings_to_show = []
       #end
       @ratings_to_show = []
     else
       @ratings_to_show = entered_ratings.keys 
+      session[:ratings] = entered_ratings
     end
     @ratings_to_show_hash = Hash[@ratings_to_show.collect {|r| [r, 1]}]
-    sort_param = params[:sort_param]
-    if sort_param.nil?
-      @movies = Movie.with_ratings(@ratings_to_show)
-      @highlight_title = nil
-      @highlight_release_date = nil
+    @sort_param = params[:sort_param]
+    if @sort_param.nil?
+       @movies = Movie.with_ratings(@ratings_to_show)
+       @highlight_title = nil
+       @highlight_release_date = nil
     else
-      @movies = Movie.with_ratings(@ratings_to_show).order("#{sort_param} ASC")
-      if sort_param == "title"
+      @movies = Movie.with_ratings(@ratings_to_show).order("#{@sort_param} ASC")
+      session[:sort_param] = @sort_param
+      if @sort_param == "title"
         @highlight_title = "bg-warning"
       else
         @highlight_release_date = "bg-warning"
       end
     end
     
-    #save the params to the session
-    session[:ratings] = params[:ratings]
-    session[:sort_param] = params[:sort_param]
-    session[:movie] = params[:movie]
   end
 
   def new
