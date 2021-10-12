@@ -16,10 +16,18 @@ class MoviesController < ApplicationController
     end
     @ratings_to_show_hash = Hash[@ratings_to_show.collect {|r| [r, 1]}]
     sort_param = params[:sort_param]
+    #should i add an instance variable to say which title to highlight?
     if sort_param.nil?
       @movies = Movie.with_ratings(@ratings_to_show)
+      @highlight_title = nil
+      @highlight_release_date = nil
     else
-      @movies = Movie.with_ratings(@ratings_to_show).order("#{params[:sort_param]} ASC")
+      @movies = Movie.with_ratings(@ratings_to_show).order("#{sort_param} ASC")
+      if sort_param == "title"
+        @highlight_title = "bg-warning"
+      else
+        @highlight_release_date = "bg-warning"
+      end
     end
   end
 
