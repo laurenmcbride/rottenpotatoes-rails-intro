@@ -10,13 +10,17 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     entered_ratings = params[:ratings]
     if entered_ratings.nil?
+      #if session.key?(:ratings)
+        #@ratings_to_show = session[:ratings]
+      #else
+        #@ratings_to_show = []
+      #end
       @ratings_to_show = []
     else
       @ratings_to_show = entered_ratings.keys 
     end
     @ratings_to_show_hash = Hash[@ratings_to_show.collect {|r| [r, 1]}]
     sort_param = params[:sort_param]
-    #should i add an instance variable to say which title to highlight?
     if sort_param.nil?
       @movies = Movie.with_ratings(@ratings_to_show)
       @highlight_title = nil
@@ -29,6 +33,11 @@ class MoviesController < ApplicationController
         @highlight_release_date = "bg-warning"
       end
     end
+    
+    #save the params to the session
+    session[:ratings] = params[:ratings]
+    session[:sort_param] = params[:sort_param]
+    session[:movie] = params[:movie]
   end
 
   def new
