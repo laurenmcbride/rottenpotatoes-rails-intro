@@ -22,10 +22,10 @@ class MoviesController < ApplicationController
     end
     @ratings_to_show_hash = Hash[@ratings_to_show.collect {|r| [r, 1]}]
     @sort_param = params[:sort_param]
-    if @sort_param.nil?
-       @movies = Movie.with_ratings(@ratings_to_show)
-       @highlight_title = nil
-       @highlight_release_date = nil
+    if @sort_param.nil? || @sort_param.empty?
+      @movies = Movie.with_ratings(@ratings_to_show)
+      @highlight_title = nil
+      @highlight_release_date = nil
     else
       @movies = Movie.with_ratings(@ratings_to_show).order("#{@sort_param} ASC")
       session[:sort_param] = @sort_param
