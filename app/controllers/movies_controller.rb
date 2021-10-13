@@ -11,17 +11,15 @@ class MoviesController < ApplicationController
     entered_ratings = params[:ratings]
     @sort_param = params[:sort_param]
     
-    #if no params[] were passed that indicate sorting/filtering
     if entered_ratings.nil? && (@sort_param.nil? || @sort_param.empty?)
-      #if session has these in them, set variables to what is stored in the session
-     if session.key?(:ratings)
-       @ratings_to_show = session[:ratings].keys
-     else
-       @ratings_to_show = @all_ratings
-     end
-     if session.key?(:sort_param)
-       @sort_param = session[:sort_param]
-     end
+      if session.key?(:ratings)
+        @ratings_to_show = session[:ratings].keys
+      else
+        @ratings_to_show = @all_ratings
+      end
+      if session.key?(:sort_param)
+        @sort_param = session[:sort_param]
+      end
       
     elsif entered_ratings.nil?
       @ratings_to_show = []
