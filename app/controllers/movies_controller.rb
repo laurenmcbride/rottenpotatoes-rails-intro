@@ -45,7 +45,6 @@ class MoviesController < ApplicationController
         @highlight_release_date = "bg-warning"
       end
     end
-    
   end
 
   def new
