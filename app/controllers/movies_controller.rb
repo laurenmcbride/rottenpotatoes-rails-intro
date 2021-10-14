@@ -10,15 +10,18 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     entered_ratings = params[:ratings]
     @sort_param = params[:sort_param]
+    #need_to_redirect = 0
     
     if entered_ratings.nil? && (@sort_param.nil? || @sort_param.empty?)
       if session.key?(:ratings)
         @ratings_to_show = session[:ratings].keys
+        #need_to_redirect = 1
       else
         @ratings_to_show = @all_ratings
       end
       if session.key?(:sort_param)
         @sort_param = session[:sort_param]
+        #need_to_redirect = 1
       end
       
     elsif entered_ratings.nil?
@@ -43,6 +46,11 @@ class MoviesController < ApplicationController
         @highlight_release_date = "bg-warning"
       end
     end
+    
+    #if need_to_redirect == 1
+      #redirect_to movies_path(session)
+    #end
+    
   end
 
   def new
