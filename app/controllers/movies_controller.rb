@@ -18,8 +18,10 @@ class MoviesController < ApplicationController
         redirect_to movies_path({:ratings => session[:ratings], :sort_param => @sort_param}) and return
       elsif session.key?(:ratings)
         @ratings_to_show = session[:ratings].keys
+        redirect_to movies_path({:ratings => session[:ratings]}) and return
       elsif session.key?(:sort_param)
         @sort_param = session[:sort_param]
+        redirect_to movies_path({:sort_param => @sort_param}) and return
       elsif !(session.key?(:ratings))
         @ratings_to_show = @all_ratings
       end
