@@ -43,9 +43,9 @@ class MoviesController < ApplicationController
       @movies = Movie.with_ratings(@ratings_to_show).order("#{@sort_param} ASC")
       session[:sort_param] = @sort_param
       if @sort_param == "title"
-        @highlight_title = "bg-warning"
+        @highlight_title = "hilite"
       else
-        @highlight_release_date = "bg-warning"
+        @highlight_release_date = "hilite"
       end
     end
     
